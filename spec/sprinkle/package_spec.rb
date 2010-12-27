@@ -94,6 +94,11 @@ CODE
       pkg = package @name, :provides => :database do; end
       pkg.provides.should == :database
     end
+    
+    it 'should allow setting a virtual package with the same name' do
+      pkg = package @name, :provides => @name do; end
+      pkg.provides.should == @name
+    end
 
     it 'should be able to represent itself as a string' do
       pkg = package @name do; end

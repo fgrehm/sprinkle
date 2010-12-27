@@ -98,7 +98,7 @@ module Sprinkle
       package = Package.new(name, metadata, &block)
       PACKAGES[name] = package
 
-      if package.provides
+      if package.provides and package.provides != package.name
         (PACKAGES[package.provides] ||= []) << package
       end
 
@@ -203,8 +203,8 @@ module Sprinkle
         @installers << Sprinkle::Installers::Transfer.new(self, source, destination, options, &block)
       end
 
-			def runner(cmd)
-				@installers << Sprinkle::Installers::Runner.new(self, cmd)
+			def runner(cmd, &block)
+				@installers << Sprinkle::Installers::Runner.new(self, cmd, &block)
 			end
 
       def verify(description = '', &block)
